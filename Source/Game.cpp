@@ -4,7 +4,7 @@
 
 Game::Game()
 	: m_tcp(nullptr)
-	, m_initialized( false )
+	, m_initialized(false)
 {
 	m_samples.reserve(c_fftSize * 2);
 	m_fft = new juce::dsp::FFT(c_fftOrder);
@@ -15,11 +15,11 @@ Game::~Game()
 	if (m_tcp->isConnected())
 		m_tcp->close();
 
-	if (m_tcp)
-	{
-		delete m_tcp;
-		m_tcp = nullptr;
-	}
+	delete m_tcp;
+	m_tcp = nullptr;
+
+	delete m_fft;
+	m_fft = nullptr;
 }
 
 void Game::Init()
