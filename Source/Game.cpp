@@ -2,6 +2,26 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include <limits>
+
+namespace helper
+{
+	float GetMax(float* data, int size)
+	{
+		float max = std::numeric_limits< float >::min();
+
+		for (int i = 0; i < size; ++i)
+		{
+			if (data[i] > max)
+			{
+				max = data[i];
+			}
+		}
+
+		return max;
+	}
+}
+
 Game::Game()
 	: m_tcp(nullptr)
 	, m_initialized(false)
