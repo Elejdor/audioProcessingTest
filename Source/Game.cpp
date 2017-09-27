@@ -80,7 +80,7 @@ void Game::Compute()
 	// I need to send only first 100 FFT samples, it should be around 0-1000 Hz
 	//float sendBuffer[100];
 	//const int size = sizeof(float) * 100;
-	//memcpy(sendBuffer, m_fftData, size);
+	//memcpy(sendBuffer, m_fftData, sizeof(float) * size);
 
 	float send = helper::GetMax(m_fftData, 256);
 	SendChunk(&send, sizeof(float) * 1);
