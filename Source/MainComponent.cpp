@@ -47,6 +47,10 @@ public:
 			m_game.AddSample(inBuffer[i]);
 		}
 
+		if (m_game.Exit())
+		{
+			JUCEApplication::getInstance()->systemRequestedQuit();
+		}
 		//float* outBuffer = bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
 
 		//for (int i = 0; i < bufferToFill.numSamples; ++i)

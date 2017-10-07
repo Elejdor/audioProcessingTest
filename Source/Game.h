@@ -20,16 +20,18 @@ public:
 
 	void Init();
 	void AddSample(float value);
+	bool Exit() { return m_exit; }
 
 private:
 	void Compute();
-	void SendChunk(float* data, int size);
+	int SendChunk(float* data, int size);
 
 private:
 	juce::StreamingSocket*	m_tcp;
 	std::vector< float >	m_samples;
 	juce::dsp::FFT*			m_fft;
 
+	bool					m_exit;
 	bool					m_initialized;
 
 	const int				c_port = 1338;

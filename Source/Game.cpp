@@ -25,6 +25,7 @@ namespace helper
 Game::Game()
 	: m_tcp(nullptr)
 	, m_initialized(false)
+	, m_exit( false )
 {
 	m_samples.reserve(c_fftSize * 2);
 	m_fft = new juce::dsp::FFT(c_fftOrder);
@@ -83,18 +84,24 @@ void Game::Compute()
 	//memcpy(sendBuffer, m_fftData, sizeof(float) * size);
 
 	float send = helper::GetMax(m_fftData, 256);
-	SendChunk(&send, sizeof(float) * 1);
+	int sent = SendChunk(&send, sizeof(float) * 1);
+	if (sent == -1)
+	{
+		m_exit = true;
+	}
 }
 
-void Game::SendChunk(float* data, int size)
+int Game::SendChunk(float* data, int size)
 {
 	if (m_tcp->waitUntilReady(false, 0) == 1)
 	{
 		jassert(m_tcp->isConnected(), "TCP is not connected");
 
 		const int sent = m_tcp->write(data, size);
-		jassert(size == sent, "Could not send this amount of data.");
+		return sent;
 	}
+
+	return 0;
 }
 
 
